@@ -1,9 +1,9 @@
-console.log('Hola Jugador 1');
+console.log('Bienvenido a GAMEHEN');
 let nombreJugador = prompt('Cual es tu nombre?');
 console.log(`Hola ${nombreJugador}`);
 console.log(`Responde responde lo que se te solicita`);
 let arrRespuestasPreguntas=[];
-let pregunta1 = String(prompt(`Eres mayor de edad?`)).toLocaleLowerCase();
+let pregunta1 = String(prompt(`Eres mayor de edad? SI / NO`)).toLocaleLowerCase();
 let personajes =
 [
     {
@@ -76,13 +76,73 @@ let personajes =
         "color_ojos": "Marrones"
       }
     }
-  ]
-  
-; 
+  ]; 
 if(pregunta1 === 'si'){
-    let preguntaEdad = Number(prompt('Que edad tienes?'));
+  let preguntaEdad = Number(prompt('Que edad tienes?'));
+  if(preguntaEdad >= 18){
     console.log(`Haz dicho que tu edad es ${preguntaEdad} y ahora podras acceder al mejor sitio de juegos hen que podras encontrar ;)`);
-    console.log('Comencemos');
+    console.log('Comencemos...');
+    let preguntaAltura = Number(prompt('¿De qué altura sería tu chica ideal?'));
+    console.log(preguntaAltura);
+
+    function encontrarPersonajesPorAltura(alturaBuscada) {
+      let personajesCoincidentes = personajes.filter(function(personaje) {
+        let alturaPersonaje = parseInt(personaje.apariencia.altura);
+        return alturaPersonaje === alturaBuscada;
+      });
+      return personajesCoincidentes;
+    }
+
+    let alturaBuscada = preguntaAltura;
+
+    let personajesCoincidentes = encontrarPersonajesPorAltura(alturaBuscada);
+
+    if (personajesCoincidentes.length > 0) {
+      console.log(`Para esta altura, las coincidencias son:`);
+      for (let i = 0; i < personajesCoincidentes.length; i += 1) {
+        console.log(`- ${personajesCoincidentes[i].nombre}`);
+      }
+      console.log('Elige una de las chicas');
+    
+      function buscarChica(chicaElegida) {
+        let chicaEncontrada = personajes.find(personaje => personaje.nombre.toLowerCase() === chicaElegida.toLowerCase());
+        return chicaEncontrada;
+      }
+    
+      let chicaElegida = prompt('¿Cuál chica elijes?');
+      let chicaEncontrada = buscarChica(chicaElegida);
+    
+      if (chicaEncontrada) {
+        console.log(`Elegiste a: ${chicaEncontrada.nombre}`);
+        console.log('Cualidades de la chica:');
+        
+        for (let propiedad in chicaEncontrada) {
+          if (typeof chicaEncontrada[propiedad] === 'object') {
+
+            console.log(`${propiedad}:`);
+            for (let subpropiedad in chicaEncontrada[propiedad]) {
+              console.log(`  ${subpropiedad}: ${chicaEncontrada[propiedad][subpropiedad]}`);
+            }
+            console.log('Que comience el Juego...')
+          } else {
+
+            console.log(`${propiedad}: ${chicaEncontrada[propiedad]}`);
+          }
+        }
+      } else {
+        console.log('No se encontró a la chica.');
+      }      
+    
+    } else {
+      console.log(`No hay personajes con esa altura.`);
+    }
+    
+
+  }else{
+    console.log('tu no eres mayor de edad y no puedes acceder a este sitio')
+  }
+
+
     
 }
 else{
